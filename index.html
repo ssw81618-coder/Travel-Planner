@@ -2,214 +2,226 @@
 <html lang="zh-TW">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <title>旅遊PLANNER v1.0</title>
   <style>
-    * { box-sizing: border-box; margin: 0; padding: 0; }
-    body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif; background-color: #f8fafc; color: #1e293b; padding: 16px; }
-    .container { max-width: 1240px; margin: 0 auto; display: flex; flex-direction: column; gap: 16px; }
+    * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+    body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif; background-color: #f8fafc; color: #1e293b; padding: 12px; }
+    .container { max-width: 1240px; margin: 0 auto; display: flex; flex-direction: column; gap: 14px; }
     
     /* 頂部功能列 */
-    .top-bar { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; background: #fff; padding: 14px 18px; border-radius: 10px; border: 1px solid #e2e8f0; box-shadow: 0 1px 3px rgba(0,0,0,0.04); }
-    .app-branding { display: flex; align-items: center; gap: 8px; }
-    h1 { font-size: 1.35rem; color: #0f172a; font-weight: 800; letter-spacing: -0.5px; }
-    .version-tag { font-size: 0.72rem; font-weight: 700; background: #e0f2fe; color: #0284c7; padding: 2px 7px; border-radius: 9999px; font-family: monospace; }
+    .top-bar { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px; background: #fff; padding: 12px 14px; border-radius: 12px; border: 1px solid #e2e8f0; box-shadow: 0 1px 3px rgba(0,0,0,0.03); }
+    .app-branding { display: flex; align-items: center; gap: 6px; }
+    h1 { font-size: 1.2rem; color: #0f172a; font-weight: 800; letter-spacing: -0.5px; }
+    .version-tag { font-size: 0.7rem; font-weight: 700; background: #e0f2fe; color: #0284c7; padding: 2px 6px; border-radius: 9999px; font-family: monospace; }
     
     .trip-date-picker-box {
-      display: inline-flex; align-items: center; gap: 6px; background: #f1f5f9; padding: 6px 12px; border-radius: 8px; border: 1px solid #cbd5e1; font-size: 0.85rem; font-weight: 600; color: #334155;
+      display: inline-flex; align-items: center; gap: 4px; background: #f1f5f9; padding: 5px 8px; border-radius: 8px; border: 1px solid #cbd5e1; font-size: 0.8rem; font-weight: 600; color: #334155; flex-wrap: wrap;
     }
-    .trip-date-picker-box input[type="date"] { border: 1px solid #cbd5e1; border-radius: 4px; padding: 4px 6px; font-size: 0.82rem; outline: none; background: #fff; }
-    .trip-days-badge { background: #0284c7; color: #fff; padding: 2px 8px; border-radius: 9999px; font-size: 0.75rem; }
+    .trip-date-picker-box input[type="date"] { border: 1px solid #cbd5e1; border-radius: 4px; padding: 3px 5px; font-size: 0.78rem; outline: none; background: #fff; max-width: 120px; }
+    .trip-days-badge { background: #0284c7; color: #fff; padding: 2px 6px; border-radius: 9999px; font-size: 0.7rem; }
 
-    .toolbar-actions { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; }
+    .toolbar-actions { display: flex; gap: 6px; align-items: center; flex-wrap: wrap; }
     
-    .btn-tool { background: #ffffff; border: 1px solid #cbd5e1; padding: 7px 12px; border-radius: 6px; font-size: 0.85rem; font-weight: 600; cursor: pointer; display: inline-flex; align-items: center; gap: 4px; color: #334155; }
-    .btn-tool:hover { background: #f1f5f9; border-color: #94a3b8; }
+    .btn-tool { background: #ffffff; border: 1px solid #cbd5e1; padding: 6px 10px; border-radius: 6px; font-size: 0.8rem; font-weight: 600; cursor: pointer; display: inline-flex; align-items: center; gap: 4px; color: #334155; }
+    .btn-tool:hover { background: #f1f5f9; }
     .btn-tool.primary { background: #0284c7; color: #ffffff; border-color: #0284c7; }
-    .btn-tool.primary:hover { background: #0369a1; }
     .btn-tool.add { background: #059669; color: #ffffff; border-color: #059669; }
-    .btn-tool.add:hover { background: #047857; }
 
-    .card { background: #ffffff; border: 1px solid #e2e8f0; border-radius: 10px; padding: 16px; box-shadow: 0 1px 3px rgba(0,0,0,0.04); }
-    h2 { font-size: 1.1rem; color: #1e293b; margin-bottom: 12px; }
+    .card { background: #ffffff; border: 1px solid #e2e8f0; border-radius: 12px; padding: 14px; box-shadow: 0 1px 3px rgba(0,0,0,0.03); }
+    h2 { font-size: 1.05rem; color: #1e293b; margin-bottom: 10px; }
 
-    /* 表單排版 */
-    .form-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; }
-    .form-group { display: flex; flex-direction: column; gap: 4px; }
-    .form-group.full-width { grid-column: 1 / -1; }
-    label { font-size: 0.78rem; font-weight: 600; color: #64748b; }
-    input, select { padding: 8px 10px; border: 1px solid #cbd5e1; border-radius: 6px; font-size: 0.88rem; outline: none; background: #fff; }
-    input:focus, select:focus { border-color: #0284c7; }
-    
-    .clock-input-wrapper { display: flex; align-items: center; border: 1px solid #cbd5e1; border-radius: 6px; background: #fff; padding-right: 8px; cursor: pointer; }
-    .clock-input-wrapper input { border: none; width: 100%; cursor: pointer; outline: none; background: transparent; }
-    .clock-input-wrapper .clock-icon { color: #64748b; font-size: 0.95rem; }
-
-    .color-preset-group { display: flex; gap: 8px; align-items: center; height: 38px; }
-    .color-btn { width: 26px; height: 26px; border-radius: 50%; border: 2px solid #e2e8f0; cursor: pointer; }
-    .color-btn.active { border-color: #0f172a; outline: 2px solid #0f172a; }
-
-    /* 路線規劃子步驟區塊 */
-    .sub-route-container { display: flex; flex-direction: column; gap: 6px; background: #f8fafc; border: 1px dashed #cbd5e1; padding: 10px; border-radius: 8px; margin-top: 2px; }
-    .sub-route-item { display: flex; gap: 6px; align-items: center; }
-    .sub-route-item input[type="text"] { flex: 1; padding: 6px 8px; font-size: 0.82rem; }
-    .sub-route-item .time-sub-input { width: 85px; flex-shrink: 0; padding: 6px 8px; font-size: 0.82rem; }
-    .btn-remove-step { background: #fee2e2; color: #dc2626; border: none; border-radius: 4px; padding: 6px 8px; cursor: pointer; font-size: 0.75rem; font-weight: bold; }
-    .btn-add-step { background: #e0f2fe; color: #0284c7; border: 1px dashed #0284c7; border-radius: 6px; padding: 6px; font-size: 0.8rem; font-weight: 600; cursor: pointer; margin-top: 4px; }
-    .btn-add-step:hover { background: #bae6fd; }
+    /* 手機專屬日期切換分頁 (Mobile Day Tabs) */
+    .mobile-day-tabs { display: none; overflow-x: auto; gap: 6px; padding-bottom: 8px; margin-bottom: 8px; scrollbar-width: none; }
+    .mobile-day-tabs::-webkit-scrollbar { display: none; }
+    .tab-btn { background: #f1f5f9; border: 1px solid #cbd5e1; padding: 6px 12px; border-radius: 20px; font-size: 0.78rem; font-weight: 700; color: #475569; white-space: nowrap; cursor: pointer; }
+    .tab-btn.active { background: #0284c7; color: #fff; border-color: #0284c7; }
 
     /* 行事曆容器 */
-    .calendar-wrapper { overflow-x: auto; background: #fff; border: 1px solid #e2e8f0; border-radius: 8px; }
+    .calendar-wrapper { overflow-x: auto; background: #fff; border: 1px solid #e2e8f0; border-radius: 8px; -webkit-overflow-scrolling: touch; }
     .calendar-container { display: inline-flex; min-width: 100%; position: relative; }
     
-    .time-sidebar { width: 55px; border-right: 1px solid #e2e8f0; flex-shrink: 0; background: #f8fafc; }
-    .time-header-space { height: 50px; border-bottom: 1px solid #e2e8f0; background: #f8fafc; }
-    .hour-slot-label { height: 68px; font-size: 0.72rem; color: #64748b; text-align: center; transform: translateY(-7px); }
+    .time-sidebar { width: 48px; border-right: 1px solid #e2e8f0; flex-shrink: 0; background: #f8fafc; }
+    .time-header-space { height: 46px; border-bottom: 1px solid #e2e8f0; background: #f8fafc; }
+    .hour-slot-label { height: 68px; font-size: 0.7rem; color: #64748b; text-align: center; transform: translateY(-7px); }
 
     .days-wrapper { display: flex; flex-grow: 1; }
-    .day-column { width: 310px; min-width: 290px; border-right: 1px solid #e2e8f0; flex-shrink: 0; position: relative; }
+    .day-column { width: 300px; min-width: 270px; border-right: 1px solid #e2e8f0; flex-shrink: 0; position: relative; }
     
-    .day-header { height: 50px; border-bottom: 1px solid #e2e8f0; display: flex; flex-direction: column; align-items: center; justify-content: center; background: #fff; }
-    .day-header .day-badge { background: #e0f2fe; color: #0369a1; font-weight: 800; font-size: 0.72rem; padding: 1px 7px; border-radius: 9999px; margin-bottom: 2px; }
-    .day-header .date-text { font-size: 0.84rem; font-weight: 700; color: #1e293b; }
-    .day-header .weekday-text { font-size: 0.7rem; color: #64748b; }
+    .day-header { height: 46px; border-bottom: 1px solid #e2e8f0; display: flex; flex-direction: column; align-items: center; justify-content: center; background: #fff; }
+    .day-header .day-badge { background: #e0f2fe; color: #0369a1; font-weight: 800; font-size: 0.7rem; padding: 1px 6px; border-radius: 9999px; margin-bottom: 1px; }
+    .day-header .date-text { font-size: 0.8rem; font-weight: 700; color: #1e293b; }
+    .day-header .weekday-text { font-size: 0.68rem; color: #64748b; }
     
     .day-grid-body { position: relative; background-size: 100% 68px; background-image: linear-gradient(to bottom, #f1f5f9 1px, transparent 1px); }
 
     /* 事件卡片 */
     .event-card {
       position: absolute; left: 4px; right: 4px; border-radius: 6px;
-      padding: 6px 8px; color: #0f172a; font-size: 0.75rem;
+      padding: 5px 7px; color: #0f172a; font-size: 0.73rem;
       border: 1px solid rgba(0, 0, 0, 0.1); cursor: pointer;
       box-shadow: 0 1px 2px rgba(0,0,0,0.06); z-index: 2;
       display: flex; flex-direction: column; justify-content: flex-start;
       overflow: hidden; box-sizing: border-box;
     }
-    .event-card:hover { transform: scale(1.01); z-index: 10; box-shadow: 0 3px 6px rgba(0,0,0,0.1); }
-    
     .event-card .title-row {
       display: flex; align-items: center; justify-content: space-between; gap: 4px;
-      font-weight: 700; font-size: 0.82rem; line-height: 1.25; margin-bottom: 3px;
+      font-weight: 700; font-size: 0.8rem; line-height: 1.25; margin-bottom: 2px;
     }
-    .event-card .dest-text {
-      flex: 1; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
-    }
-    .event-card .actions-pill-group {
-      display: inline-flex; align-items: center; gap: 4px; flex-shrink: 0;
-    }
-    .event-card .time-row {
-      font-size: 0.72rem; color: #334155; line-height: 1.2; margin-bottom: 2px;
-    }
+    .event-card .dest-text { flex: 1; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .event-card .actions-pill-group { display: inline-flex; align-items: center; gap: 3px; flex-shrink: 0; }
+    .event-card .time-row { font-size: 0.7rem; color: #334155; line-height: 1.2; margin-bottom: 2px; }
     .event-card .notes-bottom {
-      font-size: 0.7rem; color: #475569; background: rgba(255, 255, 255, 0.65);
-      border-radius: 3px; padding: 2px 5px; line-height: 1.25;
-      white-space: nowrap; overflow: hidden; text-overflow: ellipsis; margin-top: 2px;
+      font-size: 0.68rem; color: #475569; background: rgba(255, 255, 255, 0.65);
+      border-radius: 3px; padding: 2px 4px; line-height: 1.25;
+      white-space: nowrap; overflow: hidden; text-overflow: ellipsis; margin-top: 1px;
     }
 
-    /* 連結與轉乘標籤按鈕 */
-    .btn-link-pill {
-      background: #ffffff; border: 1px solid #cbd5e1; border-radius: 4px;
-      padding: 1px 5px; font-size: 0.65rem; color: #0284c7; text-decoration: none;
-      font-weight: bold; cursor: pointer; display: inline-flex; align-items: center;
-    }
-    .btn-link-pill:hover { background: #f1f5f9; }
-    .btn-route-pill {
-      background: #eff6ff; border: 1px solid #bfdbfe; border-radius: 4px;
-      padding: 1px 5px; font-size: 0.65rem; color: #1d4ed8; font-weight: bold;
-      cursor: pointer; display: inline-flex; align-items: center;
-    }
-    .btn-route-pill:hover { background: #dbeafe; }
+    .btn-link-pill { background: #ffffff; border: 1px solid #cbd5e1; border-radius: 4px; padding: 1px 4px; font-size: 0.62rem; color: #0284c7; text-decoration: none; font-weight: bold; }
+    .btn-route-pill { background: #eff6ff; border: 1px solid #bfdbfe; border-radius: 4px; padding: 1px 4px; font-size: 0.62rem; color: #1d4ed8; font-weight: bold; cursor: pointer; }
 
-    /* 預算統計面板 */
-    .currency-summary-container { display: flex; flex-direction: column; gap: 8px; margin-bottom: 14px; }
-    .currency-card { background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 6px; padding: 10px; }
-    .currency-card-title { font-size: 0.8rem; font-weight: 700; color: #475569; margin-bottom: 6px; }
+    /* 預算統計與表格 */
+    .currency-summary-container { display: flex; flex-direction: column; gap: 8px; margin-bottom: 12px; }
+    .currency-card { background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px; padding: 10px; }
+    .currency-card-title { font-size: 0.78rem; font-weight: 700; color: #475569; margin-bottom: 6px; }
     .summary-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; text-align: center; }
-    .summary-box { padding: 6px; border-radius: 5px; }
+    .summary-box { padding: 6px 4px; border-radius: 6px; }
     .box-total { background: #ffffff; border: 1px solid #cbd5e1; }
     .box-paid { background: #ecfdf5; color: #047857; }
     .box-unpaid { background: #fffbeb; color: #b45309; }
-    .summary-box .amount { font-size: 0.95rem; font-weight: 700; display: block; margin-top: 2px; font-family: monospace; }
+    .summary-box .amount { font-size: 0.9rem; font-weight: 700; display: block; margin-top: 2px; font-family: monospace; }
 
-    table { width: 100%; border-collapse: collapse; font-size: 0.85rem; }
-    th, td { padding: 8px 10px; border-bottom: 1px solid #e2e8f0; text-align: left; }
+    .table-container { width: 100%; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+    table { width: 100%; border-collapse: collapse; font-size: 0.82rem; min-width: 550px; }
+    th, td { padding: 8px; border-bottom: 1px solid #e2e8f0; text-align: left; }
     th { background: #f8fafc; color: #475569; font-weight: 600; }
-    .checkbox-cell { text-align: center; width: 44px; }
+    .checkbox-cell { text-align: center; width: 38px; }
 
-    /* 彈窗 Modal */
-    .modal-backdrop { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.45); z-index: 50; align-items: center; justify-content: center; }
+    /* 彈窗 Modal (響應式) */
+    .modal-backdrop { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.5); z-index: 50; align-items: center; justify-content: center; }
     .modal-backdrop.active { display: flex; }
-    .modal-content { background: #fff; width: 92%; max-width: 540px; border-radius: 12px; padding: 20px; box-shadow: 0 10px 25px rgba(0,0,0,0.15); max-height: 90vh; overflow-y: auto; }
+    .modal-content { background: #fff; width: 92%; max-width: 540px; border-radius: 14px; padding: 18px; box-shadow: 0 10px 25px rgba(0,0,0,0.15); max-height: 90vh; overflow-y: auto; }
     .modal-actions { display: flex; justify-content: flex-end; gap: 8px; margin-top: 14px; }
-    .btn-secondary { background: #e2e8f0; border: none; padding: 8px 14px; border-radius: 6px; cursor: pointer; font-weight: 600; }
-    .btn-danger { background: #fee2e2; color: #dc2626; border: none; padding: 8px 14px; border-radius: 6px; cursor: pointer; margin-right: auto; font-weight: 600; }
-    .btn-primary-action { background: #0284c7; color: white; border: none; padding: 8px 16px; border-radius: 6px; font-weight: 600; cursor: pointer; }
+    .btn-secondary { background: #e2e8f0; border: none; padding: 8px 14px; border-radius: 6px; cursor: pointer; font-weight: 600; font-size: 0.85rem; }
+    .btn-danger { background: #fee2e2; color: #dc2626; border: none; padding: 8px 14px; border-radius: 6px; cursor: pointer; margin-right: auto; font-weight: 600; font-size: 0.85rem; }
+    .btn-primary-action { background: #0284c7; color: white; border: none; padding: 8px 16px; border-radius: 6px; font-weight: 600; cursor: pointer; font-size: 0.85rem; }
 
-    /* 路線轉乘詳情彈窗專用 */
-    .route-timeline-modal { width: 90%; max-width: 440px; }
-    .route-step-row { display: flex; gap: 12px; position: relative; padding-bottom: 14px; }
-    .route-step-row::before { content: ""; position: absolute; left: 24px; top: 12px; bottom: 0; width: 2px; background: #cbd5e1; }
-    .route-step-row:last-child::before { display: none; }
-    .route-step-time { width: 50px; font-weight: bold; font-size: 0.8rem; color: #0284c7; font-family: monospace; }
-    .route-step-dot { width: 10px; height: 10px; border-radius: 50%; background: #0284c7; margin-top: 3px; flex-shrink: 0; z-index: 2; }
-    .route-step-desc { flex: 1; font-size: 0.85rem; color: #1e293b; line-height: 1.3; }
+    .form-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; }
+    .form-group { display: flex; flex-direction: column; gap: 4px; }
+    .form-group.full-width { grid-column: 1 / -1; }
+    label { font-size: 0.76rem; font-weight: 600; color: #64748b; }
+    input, select { padding: 8px; border: 1px solid #cbd5e1; border-radius: 6px; font-size: 0.86rem; outline: none; background: #fff; }
+    
+    .clock-input-wrapper { display: flex; align-items: center; border: 1px solid #cbd5e1; border-radius: 6px; background: #fff; padding-right: 8px; cursor: pointer; }
+    .clock-input-wrapper input { border: none; width: 100%; cursor: pointer; outline: none; background: transparent; padding: 8px; }
+
+    .color-preset-group { display: flex; gap: 8px; align-items: center; height: 36px; }
+    .color-btn { width: 26px; height: 26px; border-radius: 50%; border: 2px solid #e2e8f0; cursor: pointer; }
+    .color-btn.active { border-color: #0f172a; outline: 2px solid #0f172a; }
+
+    .sub-route-container { display: flex; flex-direction: column; gap: 6px; background: #f8fafc; border: 1px dashed #cbd5e1; padding: 8px; border-radius: 8px; }
+    .sub-route-item { display: flex; gap: 4px; align-items: center; }
+    .sub-route-item input[type="text"] { flex: 1; padding: 6px 8px; font-size: 0.8rem; }
+    .sub-route-item .time-sub-input { width: 75px; flex-shrink: 0; padding: 6px 6px; font-size: 0.8rem; }
+    .btn-remove-step { background: #fee2e2; color: #dc2626; border: none; border-radius: 4px; padding: 6px 8px; cursor: pointer; font-size: 0.72rem; }
+    .btn-add-step { background: #e0f2fe; color: #0284c7; border: 1px dashed #0284c7; border-radius: 6px; padding: 6px; font-size: 0.78rem; font-weight: 600; cursor: pointer; margin-top: 4px; }
 
     /* 圓盤時鐘選擇器 */
-    .clock-picker-modal { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.45); z-index: 100; align-items: center; justify-content: center; }
+    .clock-picker-modal { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.5); z-index: 100; align-items: center; justify-content: center; }
     .clock-picker-modal.active { display: flex; }
     .clock-dialog { background: #ffffff; border-radius: 16px; width: 280px; box-shadow: 0 12px 30px rgba(0,0,0,0.2); overflow: hidden; display: flex; flex-direction: column; align-items: center; }
-    .clock-header { width: 100%; background: #f8fafc; padding: 16px; text-align: center; border-bottom: 1px solid #e2e8f0; }
+    .clock-header { width: 100%; background: #f8fafc; padding: 14px; text-align: center; border-bottom: 1px solid #e2e8f0; }
     .clock-time-display { font-size: 1.8rem; font-weight: 700; color: #64748b; }
     .clock-time-display span.active { color: #0284c7; text-decoration: underline; }
-    .clock-face-wrapper { position: relative; width: 230px; height: 230px; border-radius: 50%; background: #f1f5f9; margin: 16px 0; }
+    .clock-face-wrapper { position: relative; width: 230px; height: 230px; border-radius: 50%; background: #f1f5f9; margin: 14px 0; }
     .clock-center-dot { position: absolute; width: 8px; height: 8px; background: #0284c7; border-radius: 50%; top: 50%; left: 50%; transform: translate(-50%, -50%); z-index: 5; }
     .clock-hand { position: absolute; width: 2px; height: 75px; background: #0284c7; bottom: 50%; left: calc(50% - 1px); transform-origin: bottom center; z-index: 4; transition: transform 0.15s ease-out; }
     .clock-num { position: absolute; width: 28px; height: 28px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.8rem; font-weight: 600; color: #334155; cursor: pointer; user-select: none; z-index: 6; }
-    .clock-num:hover { background: #e2e8f0; }
     .clock-num.selected { background: #0284c7; color: #ffffff; }
-    .clock-actions { width: 100%; display: flex; justify-content: flex-end; padding: 10px 16px; border-top: 1px solid #f1f5f9; }
+    .clock-actions { width: 100%; display: flex; justify-content: flex-end; padding: 10px 14px; border-top: 1px solid #f1f5f9; }
     .btn-clock-ok { background: #0284c7; color: white; border: none; border-radius: 6px; padding: 6px 14px; font-weight: 600; cursor: pointer; }
+
+    /* 路線詳情 Modal */
+    .route-timeline-modal { width: 92%; max-width: 400px; }
+    .route-step-row { display: flex; gap: 10px; position: relative; padding-bottom: 12px; }
+    .route-step-row::before { content: ""; position: absolute; left: 22px; top: 12px; bottom: 0; width: 2px; background: #cbd5e1; }
+    .route-step-row:last-child::before { display: none; }
+    .route-step-time { width: 45px; font-weight: bold; font-size: 0.78rem; color: #0284c7; font-family: monospace; }
+    .route-step-dot { width: 10px; height: 10px; border-radius: 50%; background: #0284c7; margin-top: 3px; flex-shrink: 0; z-index: 2; }
+    .route-step-desc { flex: 1; font-size: 0.82rem; color: #1e293b; line-height: 1.3; }
+
+    /* ==========================================================================
+       手機螢幕專屬最佳化 (Mobile Viewport <= 768px)
+       ========================================================================== */
+    @media (max-width: 768px) {
+      body { padding: 8px; }
+      .container { gap: 10px; }
+      .top-bar { padding: 10px 12px; flex-direction: column; align-items: stretch; gap: 8px; }
+      .top-bar-row1 { display: flex; justify-content: space-between; align-items: center; }
+      .trip-date-picker-box { width: 100%; justify-content: space-between; }
+      .trip-date-picker-box input[type="date"] { max-width: 110px; }
+      .toolbar-actions { width: 100%; display: grid; grid-template-columns: 1.4fr 1fr 1fr; gap: 4px; }
+      .toolbar-actions .btn-tool { justify-content: center; font-size: 0.76rem; padding: 6px 4px; }
+
+      /* 開啟手機版單日分頁 */
+      .mobile-day-tabs { display: flex; }
+      
+      /* 行事曆在手機寬度填滿，單天顯示更舒適 */
+      .day-column { width: calc(100vw - 84px); min-width: 250px; }
+
+      /* 表單改為直式單欄，輸入更從容 */
+      .form-grid { grid-template-columns: 1fr; gap: 8px; }
+      .modal-content { width: 96%; padding: 16px 14px; max-height: 94vh; }
+    }
 
     @media print {
       @page { size: A4 landscape; margin: 8mm; }
       body { background-color: #fff; padding: 0; color: #000; }
       .container { max-width: 100%; gap: 10px; }
-      .no-print, .toolbar-actions, .modal-backdrop, .clock-picker-modal { display: none !important; }
+      .no-print, .toolbar-actions, .modal-backdrop, .clock-picker-modal, .mobile-day-tabs { display: none !important; }
       .card { border: none; box-shadow: none; padding: 0; margin-bottom: 15px; page-break-inside: avoid; }
       .calendar-wrapper { border: 1px solid #94a3b8; overflow: visible !important; }
+      .day-column { display: block !important; width: 220px !important; }
     }
   </style>
 </head>
 <body>
 
   <div class="container">
+    <!-- 頂部功能列 (手機友善排版) -->
     <div class="top-bar">
-      <div class="app-branding">
-        <h1>✈️ 旅遊PLANNER</h1>
-        <span class="version-tag" id="app-version-badge">v1.0</span>
-      </div>
-      
-      <div class="toolbar-actions no-print">
-        <div class="trip-date-picker-box">
-          <span>📅 旅行時間:</span>
-          <input type="date" id="trip-start-date" onchange="onTripDateRangeChange()">
-          <span>至</span>
-          <input type="date" id="trip-end-date" onchange="onTripDateRangeChange()">
-          <span class="trip-days-badge" id="trip-days-badge">共 5 天</span>
+      <div class="top-bar-row1">
+        <div class="app-branding">
+          <h1>✈️ 旅遊PLANNER</h1>
+          <span class="version-tag" id="app-version-badge">v1.0</span>
         </div>
+        <button class="btn-tool add no-print" onclick="openAddModal()">＋ 新增行程</button>
+      </div>
 
-        <button class="btn-tool add" onclick="openAddModal()">＋ 新增行程</button>
+      <div class="trip-date-picker-box">
+        <span>📅 日期:</span>
+        <input type="date" id="trip-start-date" onchange="onTripDateRangeChange()">
+        <span>至</span>
+        <input type="date" id="trip-end-date" onchange="onTripDateRangeChange()">
+        <span class="trip-days-badge" id="trip-days-badge">共 5 天</span>
+      </div>
+
+      <div class="toolbar-actions no-print">
         <button class="btn-tool" onclick="saveToStorage(true)">💾 立即存檔</button>
-        <button class="btn-tool" onclick="document.getElementById('import-file-input').click()">📂 讀取存檔</button>
+        <button class="btn-tool" onclick="document.getElementById('import-file-input').click()">📂 讀取</button>
         <input type="file" id="import-file-input" accept=".json" style="display: none;" onchange="importData(event)">
-        <button class="btn-tool" onclick="exportData()">⬇️ 匯出檔案</button>
-        <button class="btn-tool primary" onclick="window.print()">🖨️ 列印 / 轉 A4 PDF</button>
+        <button class="btn-tool" onclick="exportData()">⬇️ 匯出</button>
+        <button class="btn-tool primary" style="grid-column: 1 / -1;" onclick="window.print()">🖨️ 列印 / 轉 A4 PDF</button>
       </div>
     </div>
 
     <!-- 1. 行事曆總表 -->
     <div class="card">
-      <h2>📅 行程行事曆總表（點擊卡片可編輯）</h2>
+      <h2>📅 行程行事曆（點擊方塊可編輯）</h2>
+      
+      <!-- 手機專用單日切換列 -->
+      <div class="mobile-day-tabs" id="mobile-day-tabs"></div>
+
       <div class="calendar-wrapper">
         <div class="calendar-container">
           <div class="time-sidebar">
@@ -225,19 +237,22 @@
     <div class="card">
       <h2>💰 預算花費總表</h2>
       <div id="currency-summaries" class="currency-summary-container"></div>
-      <table>
-        <thead>
-          <tr>
-            <th class="checkbox-cell">已付</th>
-            <th>行程 (出發地 ➔ 目的地)</th>
-            <th>天數與時間</th>
-            <th>交通、路線與備註</th>
-            <th>幣別與金額</th>
-            <th>付款方式</th>
-          </tr>
-        </thead>
-        <tbody id="budget-tbody"></tbody>
-      </table>
+      
+      <div class="table-container">
+        <table>
+          <thead>
+            <tr>
+              <th class="checkbox-cell">已付</th>
+              <th>行程 (出發地 ➔ 目的地)</th>
+              <th>天數與時間</th>
+              <th>交通與路線</th>
+              <th>金額</th>
+              <th>付款方式</th>
+            </tr>
+          </thead>
+          <tbody id="budget-tbody"></tbody>
+        </table>
+      </div>
     </div>
   </div>
 
@@ -249,7 +264,7 @@
         <input type="hidden" id="form-id">
         
         <div class="form-group full-width">
-          <label>行程日期 (依據旅行時間)</label>
+          <label>行程日期</label>
           <select id="form-date" required></select>
         </div>
 
@@ -297,10 +312,10 @@
         <div class="form-group">
           <label>底色</label>
           <div class="color-preset-group" id="form-color-presets">
-            <button type="button" class="color-btn active" data-color="#bbf7d0" style="background: #bbf7d0;" title="嫩綠"></button>
-            <button type="button" class="color-btn" data-color="#bae6fd" style="background: #bae6fd;" title="淡藍"></button>
-            <button type="button" class="color-btn" data-color="#fef08a" style="background: #fef08a;" title="淡黃"></button>
-            <button type="button" class="color-btn" data-color="#fecdd3" style="background: #fecdd3;" title="粉紅"></button>
+            <button type="button" class="color-btn active" data-color="#bbf7d0" style="background: #bbf7d0;"></button>
+            <button type="button" class="color-btn" data-color="#bae6fd" style="background: #bae6fd;"></button>
+            <button type="button" class="color-btn" data-color="#fef08a" style="background: #fef08a;"></button>
+            <button type="button" class="color-btn" data-color="#fecdd3" style="background: #fecdd3;"></button>
           </div>
           <input type="hidden" id="form-color" value="#bbf7d0">
         </div>
@@ -325,20 +340,20 @@
         </div>
 
         <div class="form-group full-width">
-          <label>備註 (會顯示於行事曆方塊下方)</label>
+          <label>備註 (會顯示於方塊下方)</label>
           <input type="text" id="form-notes" placeholder="例如: 車牌 ABC-123、訂位代號">
         </div>
 
         <div class="form-group full-width">
           <div style="display: flex; justify-content: space-between; align-items: center;">
             <label>網頁連結 / Google Maps</label>
-            <button type="button" style="background: none; border: none; color: #0284c7; font-size: 0.75rem; cursor: pointer; text-decoration: underline;" onclick="autoGenerateMapLink()">🗺️ 快速產生 Google Map 路線</button>
+            <button type="button" style="background: none; border: none; color: #0284c7; font-size: 0.72rem; cursor: pointer; text-decoration: underline;" onclick="autoGenerateMapLink()">🗺️ 快速產生 Google Map 路線</button>
           </div>
           <input type="url" id="form-link" placeholder="https://maps.google.com/... 或官方預約網址">
         </div>
 
         <div class="form-group full-width">
-          <label>路線規劃 / 轉乘步驟 (點擊可在行事曆查看)</label>
+          <label>路線規劃 / 轉乘步驟 (選填)</label>
           <div class="sub-route-container">
             <div id="sub-route-list" style="display: flex; flex-direction: column; gap: 6px;"></div>
             <button type="button" class="btn-add-step" onclick="addSubRouteRow()">＋ 新增轉乘步驟</button>
@@ -346,9 +361,9 @@
         </div>
 
         <div class="modal-actions full-width">
-          <button type="button" id="btn-modal-delete" class="btn-danger" style="display: none;" onclick="deleteCurrentEvent()">刪除項目</button>
+          <button type="button" id="btn-modal-delete" class="btn-danger" style="display: none;" onclick="deleteCurrentEvent()">刪除</button>
           <button type="button" class="btn-secondary" onclick="closeEventModal()">取消</button>
-          <button type="submit" class="btn-primary-action">儲存行程 (Enter)</button>
+          <button type="submit" class="btn-primary-action">儲存行程</button>
         </div>
       </form>
     </div>
@@ -357,11 +372,11 @@
   <!-- 路線轉乘詳情彈窗 Modal -->
   <div class="modal-backdrop" id="route-detail-modal">
     <div class="modal-content route-timeline-modal">
-      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
-        <h2 id="route-detail-title" style="margin: 0; font-size: 1.1rem;">🔀 轉乘路線規劃詳情</h2>
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px;">
+        <h2 id="route-detail-title" style="margin: 0; font-size: 1.05rem;">🔀 轉乘路線詳情</h2>
         <button type="button" class="btn-secondary" style="padding: 4px 10px; font-size: 0.8rem;" onclick="closeRouteDetailModal()">關閉</button>
       </div>
-      <div id="route-detail-steps" style="display: flex; flex-direction: column; margin-top: 10px;"></div>
+      <div id="route-detail-steps" style="display: flex; flex-direction: column;"></div>
     </div>
   </div>
 
@@ -386,9 +401,6 @@
   </div>
 
   <script>
-    /* ==========================================================================
-       版本與資料持久化架構 (永久防覆蓋與向後相容引擎)
-       ========================================================================== */
     const APP_VERSION = "v1.0";
     const STORAGE_KEY_ITEMS = "TRAVEL_PLANNER_ITEMS";
     const STORAGE_KEY_RANGE = "TRAVEL_PLANNER_RANGE";
@@ -397,7 +409,6 @@
     document.getElementById('app-version-badge').innerText = APP_VERSION;
 
     function loadPersistedData() {
-      // 1. 自動檢測並無縫遷移先前的各階段測試版資料
       const legacyKeys = ['my_travel_planner_data_v13', 'my_travel_planner_data_v12', 'my_travel_planner_data_v11', 'my_travel_planner_data_v10'];
       let loadedItems = null;
 
@@ -419,7 +430,6 @@
         }
       }
 
-      // 2. 讀取旅行日期區間
       let loadedRange = null;
       const rawRange = localStorage.getItem(STORAGE_KEY_RANGE);
       if (rawRange) {
@@ -440,12 +450,10 @@
         }
       }
 
-      // 3. 預設值備援
       if (!loadedRange) {
         loadedRange = { startDate: '2026-10-14', endDate: '2026-10-18' };
       }
 
-      // 4. 更新版本標記（供未來版本遷移辨識）
       localStorage.setItem(STORAGE_KEY_VER, APP_VERSION);
 
       return {
@@ -457,9 +465,9 @@
     const initialData = loadPersistedData();
     let tripRange = initialData.tripRange;
     let items = initialData.items;
+    let activeMobileDate = tripRange.startDate; // 手機當前選中的單天
     const HOUR_HEIGHT = 68;
 
-    /* ---------------- 純字串年/月/日計算 (無時區偏差) ---------------- */
     function parseYMD(str) {
       const parts = str.split('-').map(Number);
       return { y: parts[0], m: parts[1], d: parts[2] };
@@ -526,6 +534,7 @@
         tripRange.startDate = start;
         tripRange.endDate = end;
       }
+      activeMobileDate = tripRange.startDate;
       saveToStorage(false);
       updateTripDaysBadge();
       render();
@@ -585,7 +594,7 @@
       row.className = 'sub-route-item';
       row.innerHTML = `
         <input type="text" class="time-sub-input" placeholder="時間 (如 09:15)" value="${timeVal || ''}">
-        <input type="text" placeholder="路線說明 (如: 搭御堂筋線往梅田、3月台換車)" value="${descVal || ''}">
+        <input type="text" placeholder="路線說明 (如: 搭御堂筋線)" value="${descVal || ''}">
         <button type="button" class="btn-remove-step" onclick="this.parentElement.remove()">✕</button>
       `;
       container.appendChild(row);
@@ -609,7 +618,7 @@
       const item = items.find(it => it.id === id);
       if (!item || !item.subRoutes || item.subRoutes.length === 0) return;
 
-      document.getElementById('route-detail-title').innerText = `🔀 ${item.origin} ➔ ${item.destination} 轉乘路線`;
+      document.getElementById('route-detail-title').innerText = `🔀 ${item.origin} ➔ ${item.destination}`;
       const container = document.getElementById('route-detail-steps');
       container.innerHTML = '';
 
@@ -758,7 +767,7 @@
       localStorage.setItem(STORAGE_KEY_RANGE, JSON.stringify(tripRange));
       localStorage.setItem(STORAGE_KEY_VER, APP_VERSION);
       if (notify) {
-        alert('✅ 旅遊PLANNER 資料已成功儲存！');
+        alert('✅ 旅遊PLANNER 資料已儲存！');
       }
     }
 
@@ -803,9 +812,10 @@
             alert('檔案格式不相符！');
             return;
           }
+          activeMobileDate = tripRange.startDate;
           saveToStorage(false);
           render();
-          alert('✅ 旅遊PLANNER 行程檔案已成功載入！');
+          alert('✅ 旅遊PLANNER 行程已成功載入！');
         } catch (err) {
           alert('解析檔案失敗，請確認檔案格式是否正確。');
         }
@@ -819,7 +829,7 @@
       document.getElementById('modal-title').innerText = '新增行程';
       document.getElementById('form-id').value = '';
 
-      let defaultDate = tripRange.startDate;
+      let defaultDate = activeMobileDate || tripRange.startDate;
       let defaultStartT = '08:00';
       let defaultEndT = '09:00';
 
@@ -847,8 +857,6 @@
       
       document.getElementById('btn-modal-delete').style.display = 'none';
       document.getElementById('event-modal').classList.add('active');
-      
-      setTimeout(() => document.getElementById('form-origin').focus(), 100);
     }
 
     function openEditModal(id) {
@@ -882,8 +890,9 @@
     document.getElementById('event-form').addEventListener('submit', function(e) {
       e.preventDefault();
       const id = document.getElementById('form-id').value;
+      const targetDate = document.getElementById('form-date').value;
       const data = {
-        date: document.getElementById('form-date').value,
+        date: targetDate,
         startTime: document.getElementById('form-startTime').value,
         endTime: document.getElementById('form-endTime').value,
         origin: document.getElementById('form-origin').value,
@@ -908,6 +917,7 @@
         });
       }
 
+      activeMobileDate = targetDate;
       saveToStorage(false);
       render();
       closeEventModal();
@@ -923,7 +933,6 @@
       }
     }
 
-    /* ---------------- 交通方式與顏色輔助 ---------------- */
     const standardTransports = ['步行', '專車', '飛機', '高鐵', '火車', '電車', '公車', '計程車', '自駕', '腳踏車'];
     
     function handleTransportChange(selectId, customInputId) {
@@ -1008,8 +1017,9 @@
       return { startHour, endHour };
     }
 
-    /* ---------------- 畫面渲染 ---------------- */
+    /* ---------------- 畫面渲染 (含手機 Day Tabs) ---------------- */
     function render() {
+      const isMobile = window.innerWidth <= 768;
       const { startHour, endHour } = calculateTimeBounds();
       const totalHours = endHour - startHour;
       const totalHeight = totalHours * HOUR_HEIGHT;
@@ -1024,14 +1034,38 @@
         hourContainer.appendChild(div);
       }
 
-      // 2. 日期直欄
+      // 2. 日期與手機分頁
       const rangeDates = getDatesInRange(tripRange.startDate, tripRange.endDate);
+      if (!rangeDates.includes(activeMobileDate)) {
+        activeMobileDate = rangeDates[0];
+      }
+
+      // 渲染手機專用分頁 Tab
+      const mobileTabs = document.getElementById('mobile-day-tabs');
+      mobileTabs.innerHTML = '';
+      rangeDates.forEach((dateStr, idx) => {
+        const btn = document.createElement('button');
+        btn.className = 'tab-btn' + (dateStr === activeMobileDate ? ' active' : '');
+        btn.innerText = `Day ${idx + 1} (${dateStr.slice(5)})`;
+        btn.onclick = () => {
+          activeMobileDate = dateStr;
+          render();
+        };
+        mobileTabs.appendChild(btn);
+      });
+
+      // 3. 日期直欄渲染 (手機若非列印模式，可選擇只呈現選中日或全部，預設優化呈現)
       const daysWrapper = document.getElementById('days-wrapper');
       daysWrapper.innerHTML = '';
 
       rangeDates.forEach((dateStr, idx) => {
         const dayCol = document.createElement('div');
         dayCol.className = 'day-column';
+
+        // 在手機螢幕下，只顯現 activeMobileDate 該天，避免 5 天擠在一起
+        if (isMobile && dateStr !== activeMobileDate) {
+          dayCol.style.display = 'none';
+        }
 
         const dayNum = idx + 1;
         const weekdayStr = getWeekdayName(dateStr);
@@ -1089,7 +1123,7 @@
         });
       });
 
-      // 3. 預算統計
+      // 4. 預算統計
       const budgetByCurrency = {};
       items.forEach(item => {
         const curr = item.currency || 'TWD';
@@ -1107,7 +1141,7 @@
       const currencies = Object.keys(budgetByCurrency);
       
       if (currencies.length === 0) {
-        currencySummariesContainer.innerHTML = '<div style="color:#94a3b8; font-size: 0.85rem;">目前尚無支出項目</div>';
+        currencySummariesContainer.innerHTML = '<div style="color:#94a3b8; font-size: 0.82rem;">目前尚無支出項目</div>';
       } else {
         currencies.forEach(curr => {
           const data = budgetByCurrency[curr];
@@ -1125,7 +1159,7 @@
         });
       }
 
-      // 4. 預算表格
+      // 5. 預算表格
       const tbody = document.getElementById('budget-tbody');
       tbody.innerHTML = '';
 
@@ -1140,25 +1174,25 @@
 
           let subRoutesDetail = '';
           if (item.subRoutes && item.subRoutes.length > 0) {
-            subRoutesDetail = `<div style="font-size:0.75rem; color:#0284c7; margin-top:2px;">🔀 ${item.subRoutes.map(s => `${s.time ? s.time + ' ' : ''}${s.desc}`).join(' ➔ ')}</div>`;
+            subRoutesDetail = `<div style="font-size:0.72rem; color:#0284c7; margin-top:2px;">🔀 ${item.subRoutes.map(s => `${s.time ? s.time + ' ' : ''}${s.desc}`).join(' ➔ ')}</div>`;
           }
 
-          const linkTag = item.link ? `<a href="${item.link}" target="_blank" style="margin-left:6px; color:#0284c7; text-decoration:none; font-size:0.75rem;">[🔗 連結]</a>` : '';
+          const linkTag = item.link ? `<a href="${item.link}" target="_blank" style="margin-left:4px; color:#0284c7; text-decoration:none; font-size:0.72rem;">[🔗連結]</a>` : '';
 
           tr.innerHTML = `
             <td class="checkbox-cell">
               <input type="checkbox" ${item.isPaid ? 'checked' : ''} onchange="togglePaid('${item.id}')">
             </td>
             <td>
-              <span style="display:inline-block; width:10px; height:10px; border-radius:3px; background-color:${item.color}; border:1px solid #cbd5e1; margin-right:5px; vertical-align:middle;"></span>
+              <span style="display:inline-block; width:8px; height:8px; border-radius:2px; background-color:${item.color}; border:1px solid #cbd5e1; margin-right:4px; vertical-align:middle;"></span>
               <strong>${item.origin}</strong> ➔ <strong>${item.destination}</strong>
               ${linkTag}
             </td>
-            <td>${item.date} <strong style="color:#0284c7; margin-left:2px;">[${dayLabel}]</strong> <small style="color:#64748b;">${item.startTime}~${item.endTime}</small></td>
+            <td>${item.date} <strong style="color:#0284c7;">[${dayLabel}]</strong> <small style="color:#64748b;">${item.startTime}~${item.endTime}</small></td>
             <td>
               ${item.transportType || '-'}
               ${subRoutesDetail}
-              ${item.notes ? `<div style="font-size:0.75rem; color:#64748b; margin-top:2px;">📝 ${item.notes}</div>` : ''}
+              ${item.notes ? `<div style="font-size:0.72rem; color:#64748b; margin-top:2px;">📝 ${item.notes}</div>` : ''}
             </td>
             <td style="font-family: monospace; font-weight: 600;">
               ${item.currency || 'TWD'} ${costNum.toLocaleString()}
@@ -1175,6 +1209,11 @@
       saveToStorage(false);
       render();
     }
+
+    // 視窗縮放時自動重整排版狀態
+    window.addEventListener('resize', () => {
+      render();
+    });
 
     initTripRangeInputs();
     bindColorPicker('form-color-presets', 'form-color');
